@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<title>Coronavirus Diagnosis Prediction</title>
+{% endblock %}
+
+{% block body %}
+<div class="box_1">
+
+    <h1>Coronavirus Diagnosis Prediction</h1>
+
+    <p>In this web app, one can predict the chances of having Coronavirus given symptoms.
+        For the modeling, I used the data released by the Israeli Ministry of Health regarding tests carried out on
+        people who were suspected of being Coronavirus patients.</p>
+    <li>This model does not constitute a medical recommendation under any circumstances.</li>
+    <li>The data is probably biased as a result of the way it is collected, and especially because no motivation is given
+        for testing each subject. I guess there are just a few if any healthy people with no reason to take the test that are included in the data.
+        This will definitely cause a systemic error in the predictions.</li>
+    <li>My intention of building this app was only to learn HTML, CSS and flask.</li>
+
+</div>
+
+<div class="box_2 bfc-root">
+    <div class="head">
+        <h2>{{ box_2_title }}</h2>
+    </div>
+    {% if not output_1 %}
+        <form action="{{ url_for('predict')}}" method="POST" class="my_form">
+            <div class="form_group">
+                  <label>Gender <span class="required">*</span> </label>
+                  <select id="gender" name="gender" required>
+                      <option value="" disabled selected>Please choose</option>
+                      <option value="Female">Female</option>
+                      <option value="Male">Male</option>
+                  </select>
+            </div>
+            <div class="form_group">
+                <label>Age <span class="required">*</span> </label>
+                <input type="text" name="age" required>
+            </div>
+            <div class="form_group">
+                <label>What is your body temperature? (in celsius degrees) <span class="required">*</span> </label>
+                <input type="text" name="fever" required>
+            </div>
+            <div class="form_group">
+                <label>Do you have a headache? <span class="required">*</span> </label>
+                <select id="headache" name="headache" required>
+                    <option value="" disabled selected>Please choose</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form_group">
+                <label>Are you coughing? <span class="required">*</span> </label>
+                <select id="cough" name="cough" required>
+                    <option value="" disabled selected>Please choose</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form_group">
+                <label>Do you have shortness of breath? <span class="required">*</span> </label>
+                <select id="shortness_of_breath" name="shortness_of_breath" required>
+                    <option value="" disabled selected>Please choose</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form_group">
+                <label>Does your throat hurt? <span class="required">*</span> </label>
+                <select id="sore_throat" name="sore_throat" required>
+                    <option value="" disabled selected>Please choose</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <button type="Submit" class="button">Predict</button>
+        </form>
+    {% endif %}
+
+    {% if output_1 %}
+    <div class="results">
+        <div class="box_3">
+        <div class="{{class_type}}">
+            <h2>{{ output_1 }}</h2>
+         </div>
+        </div>
+    <a href="/" class="button">Check again</a>
+    </div>
+    {% endif %}
+
+
+</div>
+
+<div class="clr"></div>
+
+{% endblock %}
